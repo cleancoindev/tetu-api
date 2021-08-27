@@ -1,0 +1,17 @@
+node_modules
+package-lock.json
+
+lib
+dist
+
+.idea
+.hardhat
+secrets.ts
+.openzeppelin
+.tenderly
+arguments-*.js
+sh
+docs
+tmp
+settings.ts
+.env
