@@ -51,4 +51,16 @@ export class TetuApi {
       return Promise.reject(`Error web3 call ${msg} ${reason}`);
     });
   }
+
+  public async web3Call3<T, K, G, M>(call: (a1: K, a2: G, a3: M) => T, a1: K, a2: G, a3: M, msg: string, retry = 0): Promise<T> {
+    return Promise.resolve(call.call(this, a1, a2, a3))
+    .catch((reason) => {
+      if (retry < MAX_RETRY
+          && reason.toString().indexOf('execution reverted') === -1) {
+        console.error(`Retry ${retry + 1} ${msg}`);
+        return this.web3Call3(call, a1, a2, a3, msg, retry + 1);
+      }
+      return Promise.reject(`Error web3 call ${msg} ${reason}`);
+    });
+  }
 }
