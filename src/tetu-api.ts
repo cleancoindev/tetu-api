@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import {VaultService} from "./vault-service";
+import {VaultService} from "./services/vault-service";
 import {Networkish} from "@ethersproject/networks";
 
 const MAX_RETRY = 3;
@@ -20,7 +20,7 @@ export class TetuApi {
     return Promise.resolve(call.call(this))
     .catch((reason) => {
       if (retry < MAX_RETRY
-          && reason.toString().indexOf('execution reverted') === -1) {
+          && reason.toString().indexOf("execution reverted") === -1) {
         console.error(`Retry ${retry + 1} ${msg}`);
         return this.web3Call0(call, msg, retry + 1);
       }
@@ -32,7 +32,7 @@ export class TetuApi {
     return Promise.resolve(call.call(this, a1))
     .catch((reason) => {
       if (retry < MAX_RETRY
-          && reason.toString().indexOf('execution reverted') === -1) {
+          && reason.toString().indexOf("execution reverted") === -1) {
         console.error(`Retry ${retry + 1} ${msg}`);
         return this.web3Call1(call, a1, msg, retry + 1);
       }
@@ -44,7 +44,7 @@ export class TetuApi {
     return Promise.resolve(call.call(this, a1, a2))
     .catch((reason) => {
       if (retry < MAX_RETRY
-          && reason.toString().indexOf('execution reverted') === -1) {
+          && reason.toString().indexOf("execution reverted") === -1) {
         console.error(`Retry ${retry + 1} ${msg}`);
         return this.web3Call2(call, a1, a2, msg, retry + 1);
       }

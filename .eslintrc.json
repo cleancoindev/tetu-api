@@ -16,6 +16,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
+  "ignorePatterns": ["typechain"],
   "rules": {
     "no-console": "off",
     "linebreak-style": "off",
