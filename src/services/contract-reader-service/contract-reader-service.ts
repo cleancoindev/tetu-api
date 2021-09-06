@@ -251,19 +251,19 @@ export class ContractReaderService {
     return this.tetuApi.web3Call1(this.instance(address).vaultUsers, vault, address + ' vaultUsers');
   }
 
-  public async geTVaultWithUserInfoPages(address: string, user: string, page: BigNumber, pageSize: BigNumber): Promise<TVaultWithUserInfoPages> {
+  public async getVaultWithUserInfoPages(address: string, user: string, page: BigNumber, pageSize: BigNumber): Promise<TVaultWithUserInfoPages> {
     return this.tetuApi.web3Call3(this.instance(address).vaultWithUserInfoPages, user, page, pageSize, address + ' vaultWithUserInfoPages');
   }
 
-  public async geTVaultWithUserInfoPagesLight(address: string, user: string, page: BigNumber, pageSize: BigNumber): Promise<TVaultWithUserInfoPagesLight> {
+  public async getVaultWithUserInfoPagesLight(address: string, user: string, page: BigNumber, pageSize: BigNumber): Promise<TVaultWithUserInfoPagesLight> {
     return this.tetuApi.web3Call3(this.instance(address).vaultWithUserInfoPagesLight, user, page, pageSize, address + ' vaultWithUserInfoPagesLight');
   }
 
-  public async geTVaultWithUserInfos(address: string, user: string, vaults: string[]): Promise<TVaultWithUserInfos> {
+  public async getVaultWithUserInfos(address: string, user: string, vaults: string[]): Promise<TVaultWithUserInfos> {
     return this.tetuApi.web3Call2(this.instance(address).vaultWithUserInfos, user, vaults, address + ' vaultWithUserInfos');
   }
 
-  public async geTVaultWithUserInfosLight(address: string, user: string, vaults: string[]): Promise<TVaultWithUserInfosLight> {
+  public async getVaultWithUserInfosLight(address: string, user: string, vaults: string[]): Promise<TVaultWithUserInfosLight> {
     return this.tetuApi.web3Call2(this.instance(address).vaultWithUserInfosLight, user, vaults, address + ' vaultWithUserInfosLight');
   }
 
