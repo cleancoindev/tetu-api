@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import {VaultService} from "./services/vault-service";
+import {ContractReaderService} from "./services/contract-reader-service";
 import {Networkish} from "@ethersproject/networks";
 
 const MAX_RETRY = 3;
@@ -8,12 +9,14 @@ export class TetuApi {
 
   public readonly web3Instance: Web3;
   public readonly vaultService: VaultService;
+  public readonly contractReaderService: ContractReaderService;
   public readonly net: Networkish;
 
   constructor(web3Instance: Web3, net: Networkish) {
     this.web3Instance = web3Instance;
     this.net = net;
     this.vaultService = new VaultService(this);
+    this.contractReaderService = new ContractReaderService(this);
   }
 
   public async web3Call0<T>(call: () => T, msg: string, retry = 0): Promise<T> {
