@@ -381,7 +381,7 @@ describe("Contract reader service tests", (): void => {
     expect(isBigNumber(element.depositedShare)).is.equal(true);
   });
 
-  // TODO Need user's vallet with rewards
+  // TODO Need user's wallet with rewards
   it("getUserRewards should be correct", async () => {
     const values = await tetuApi.contractReaderService.getUserRewards(
       testContractReaderAddress,
@@ -394,7 +394,7 @@ describe("Contract reader service tests", (): void => {
     expect(valuesIsArray).is.equal(true);
   });
 
-  // TODO Need user's vallet with rewards
+  // TODO Need user's wallet with rewards
   it("getUserRewardsBoost should be correct", async () => {
     const values = await tetuApi.contractReaderService.getUserRewardsBoost(
       testContractReaderAddress,
@@ -407,7 +407,7 @@ describe("Contract reader service tests", (): void => {
     expect(valuesIsArray).is.equal(true);
   });
 
-  // TODO Need user's vallet with rewards
+  // TODO Need user's wallet with rewards
   it("getUserRewardsBoostUsdc should be correct", async () => {
     const values = await tetuApi.contractReaderService.getUserRewardsBoostUsdc(
       testContractReaderAddress,
@@ -420,7 +420,7 @@ describe("Contract reader service tests", (): void => {
     expect(valuesIsArray).is.equal(true);
   });
 
-  // TODO Need user's vallet with rewards
+  // TODO Need user's wallet with rewards
   it("getUserRewardsUsdc should be correct", async () => {
     const values = await tetuApi.contractReaderService.getUserRewardsUsdc(
       testContractReaderAddress,
