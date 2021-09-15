@@ -6,14 +6,9 @@ import {
   isBigNumber,
   isBigNumbers,
   isAddresses,
-  arrayHasArray,
-  arrayHasString,
-  arrayHasAddress,
-  arrayHasBigNumber,
 } from "../test-utils";
 import { TetuApi } from "../../src/tetu-api";
 import * as dotenv from "dotenv";
-import { format } from "path/posix";
 
 dotenv.config({ path: "./.env" });
 
@@ -343,12 +338,18 @@ describe("Contract reader service tests", (): void => {
       "0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"
     );
 
-    const isArray = Array.isArray(values);
-
-    expect(arrayHasArray(values)).is.equal(true);
-    expect(arrayHasAddress(values)).is.equal(true);
-    expect(arrayHasBigNumber(values)).is.equal(true);
-    expect(isArray).is.equal(true);
+    expect(Web3.utils.isAddress(values.wallet)).is.equal(true);
+    expect(Web3.utils.isAddress(values.vault)).is.equal(true);
+    expect(isBigNumber(values.underlyingBalance)).is.equal(true);
+    expect(isBigNumber(values.underlyingBalanceUsdc)).is.equal(true);
+    expect(isBigNumber(values.depositedUnderlying)).is.equal(true);
+    expect(isBigNumber(values.depositedUnderlyingUsdc)).is.equal(true);
+    expect(isBigNumber(values.depositedShare)).is.equal(true);
+    expect(Array.isArray(values.rewardTokens)).is.equal(true);
+    expect(Array.isArray(values.rewards)).is.equal(true);
+    expect(Array.isArray(values.rewardsUsdc)).is.equal(true);
+    expect(Array.isArray(values.rewardsBoost)).is.equal(true);
+    expect(Array.isArray(values.rewardsBoostUsdc)).is.equal(true);
   });
 
   it("getUserInfoLight should be correct", async () => {
@@ -358,10 +359,9 @@ describe("Contract reader service tests", (): void => {
       "0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"
     );
 
-    const isArray = Array.isArray(values);
-
-    expect(arrayHasBigNumber(values)).is.equal(true);
-    expect(isArray).is.equal(true);
+    expect(isBigNumber(values.depositedUnderlying)).is.equal(true);
+    expect(isBigNumber(values.depositedUnderlyingUsdc)).is.equal(true);
+    expect(isBigNumber(values.depositedShare)).is.equal(true);
   });
 
   it("getUserInfosLight should be correct", async () => {
@@ -371,13 +371,14 @@ describe("Contract reader service tests", (): void => {
       ["0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"]
     );
 
-    const isArray = Array.isArray(values);
-
     const element = values[0];
-    const elementIsArray = Array.isArray(element);
 
-    expect(isArray).is.equal(true);
-    expect(elementIsArray).is.equal(true);
+    expect(Array.isArray(values)).is.equal(true);
+    expect(Array.isArray(element)).is.equal(true);
+
+    expect(isBigNumber(element.depositedUnderlying)).is.equal(true);
+    expect(isBigNumber(element.depositedUnderlyingUsdc)).is.equal(true);
+    expect(isBigNumber(element.depositedShare)).is.equal(true);
   });
 
   // TODO Need user's vallet with rewards
@@ -498,12 +499,29 @@ describe("Contract reader service tests", (): void => {
       "0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"
     );
 
-    const isArray = Array.isArray(values);
-
-    expect(arrayHasArray(values)).is.equal(true);
-    expect(arrayHasAddress(values)).is.equal(true);
-    expect(arrayHasBigNumber(values)).is.equal(true);
-    expect(isArray).is.equal(true);
+    expect(Web3.utils.isAddress(values.addr)).is.equal(true);
+    expect(values.name).is.equal("TETU_PS");
+    expect(isBigNumber(values.created)).is.equal(true);
+    expect(typeof values.active === "boolean").is.equal(true);
+    expect(isBigNumber(values.tvl)).is.equal(true);
+    expect(isBigNumber(values.tvlUsdc)).is.equal(true);
+    expect(isBigNumber(values.decimals)).is.equal(true);
+    expect(Web3.utils.isAddress(values.underlying)).is.equal(true);
+    expect(Array.isArray(values.rewardTokens)).is.equal(true);
+    expect(Array.isArray(values.rewardTokensBal)).is.equal(true);
+    expect(Array.isArray(values.rewardTokensBalUsdc)).is.equal(true);
+    expect(isBigNumber(values.duration)).is.equal(true);
+    expect(Array.isArray(values.rewardsApr)).is.equal(true);
+    expect(isBigNumber(values.ppfsApr)).is.equal(true);
+    expect(isBigNumber(values.users)).is.equal(true);
+    expect(Web3.utils.isAddress(values.strategy)).is.equal(true);
+    expect(isBigNumber(values.strategyCreated)).is.equal(true);
+    expect(typeof values.platform === "number").is.equal(true);
+    expect(Array.isArray(values.assets)).is.equal(true);
+    expect(Web3.utils.isAddress(values.assets[0])).is.equal(true);
+    expect(Array.isArray(values.strategyRewards)).is.equal(true);
+    expect(typeof values.strategyOnPause === "boolean").is.equal(true);
+    expect(isBigNumber(values.earned)).is.equal(true);
   });
 
   it("getVaultInfoLight should be correct", async () => {
@@ -512,12 +530,19 @@ describe("Contract reader service tests", (): void => {
       "0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"
     );
 
-    const isArray = Array.isArray(values);
-
-    expect(arrayHasArray(values)).is.equal(true);
-    expect(arrayHasAddress(values)).is.equal(true);
-    expect(arrayHasBigNumber(values)).is.equal(true);
-    expect(isArray).is.equal(true);
+    expect(Web3.utils.isAddress(values.addr)).is.equal(true);
+    expect(isBigNumber(values.created)).is.equal(true);
+    expect(typeof values.active === "boolean").is.equal(true);
+    expect(isBigNumber(values.tvl)).is.equal(true);
+    expect(isBigNumber(values.tvlUsdc)).is.equal(true);
+    expect(Web3.utils.isAddress(values.underlying)).is.equal(true);
+    expect(Array.isArray(values.rewardTokens)).is.equal(true);
+    expect(Array.isArray(values.rewardsApr)).is.equal(true);
+    expect(isBigNumber(values.ppfsApr)).is.equal(true);
+    expect(typeof values.platform === "number").is.equal(true);
+    expect(Array.isArray(values.assets)).is.equal(true);
+    expect(Web3.utils.isAddress(values.assets[0])).is.equal(true);
+    expect(isBigNumber(values.earned)).is.equal(true);
   });
 
   it("getVaultInfos should be correct", async () => {
@@ -526,15 +551,34 @@ describe("Contract reader service tests", (): void => {
       ["0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"]
     );
 
-    const isArray = Array.isArray(values);
-    const element = values[0];
-    const elemntIsArray = Array.isArray(values[0]);
+    const element = values[0]
 
-    expect(arrayHasArray(element)).is.equal(true);
-    expect(arrayHasAddress(element)).is.equal(true);
-    expect(arrayHasBigNumber(element)).is.equal(true);
-    expect(isArray).is.equal(true);
-    expect(elemntIsArray).is.equal(true);
+    expect(Array.isArray(values)).is.equal(true);
+    expect(Array.isArray(element)).is.equal(true);
+
+    expect(Web3.utils.isAddress(element.addr)).is.equal(true);
+    expect(element.name).is.equal("TETU_PS");
+    expect(isBigNumber(element.created)).is.equal(true);
+    expect(typeof element.active === "boolean").is.equal(true);
+    expect(isBigNumber(element.tvl)).is.equal(true);
+    expect(isBigNumber(element.tvlUsdc)).is.equal(true);
+    expect(isBigNumber(element.decimals)).is.equal(true);
+    expect(Web3.utils.isAddress(element.underlying)).is.equal(true);
+    expect(Array.isArray(element.rewardTokens)).is.equal(true);
+    expect(Array.isArray(element.rewardTokensBal)).is.equal(true);
+    expect(Array.isArray(element.rewardTokensBalUsdc)).is.equal(true);
+    expect(isBigNumber(element.duration)).is.equal(true);
+    expect(Array.isArray(element.rewardsApr)).is.equal(true);
+    expect(isBigNumber(element.ppfsApr)).is.equal(true);
+    expect(isBigNumber(element.users)).is.equal(true);
+    expect(Web3.utils.isAddress(element.strategy)).is.equal(true);
+    expect(isBigNumber(element.strategyCreated)).is.equal(true);
+    expect(typeof element.platform === "number").is.equal(true);
+    expect(Array.isArray(element.assets)).is.equal(true);
+    expect(Web3.utils.isAddress(element.assets[0])).is.equal(true);
+    expect(Array.isArray(element.strategyRewards)).is.equal(true);
+    expect(typeof element.strategyOnPause === "boolean").is.equal(true);
+    expect(isBigNumber(element.earned)).is.equal(true);
   });
 
   it("getVaultInfosLight should be correct", async () => {
@@ -543,15 +587,23 @@ describe("Contract reader service tests", (): void => {
       ["0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"]
     );
 
-    const isArray = Array.isArray(values);
-    const element = values[0];
-    const elemntIsArray = Array.isArray(values[0]);
+    const element = values[0]
 
-    expect(arrayHasArray(element)).is.equal(true);
-    expect(arrayHasAddress(element)).is.equal(true);
-    expect(arrayHasBigNumber(element)).is.equal(true);
-    expect(isArray).is.equal(true);
-    expect(elemntIsArray).is.equal(true);
+    expect(Array.isArray(values)).is.equal(true);
+
+    expect(Web3.utils.isAddress(element.addr)).is.equal(true);
+    expect(isBigNumber(element.created)).is.equal(true);
+    expect(typeof element.active === "boolean").is.equal(true);
+    expect(isBigNumber(element.tvl)).is.equal(true);
+    expect(isBigNumber(element.tvlUsdc)).is.equal(true);
+    expect(Web3.utils.isAddress(element.underlying)).is.equal(true);
+    expect(Array.isArray(element.rewardTokens)).is.equal(true);
+    expect(Array.isArray(element.rewardsApr)).is.equal(true);
+    expect(isBigNumber(element.ppfsApr)).is.equal(true);
+    expect(typeof element.platform === "number").is.equal(true);
+    expect(Array.isArray(element.assets)).is.equal(true);
+    expect(Web3.utils.isAddress(element.assets[0])).is.equal(true);
+    expect(isBigNumber(element.earned)).is.equal(true);
   });
 
   it("getVaultName should be correct", async () => {
@@ -676,10 +728,50 @@ describe("Contract reader service tests", (): void => {
         BigNumber.from(1),
         BigNumber.from(1)
       );
+    
+    const vault = values[0].vault
+    const user = values[0].user
 
-    const isArray = Array.isArray(values);
+    expect(Array.isArray(values)).is.equal(true);
 
-    expect(isArray).is.equal(true);
+    // Check vault
+    expect(Web3.utils.isAddress(vault.addr)).is.equal(true);
+    expect(vault.name).is.equal("TETU_SUSHI_WMATIC_WETH");
+    expect(isBigNumber(vault.created)).is.equal(true);
+    expect(typeof vault.active === "boolean").is.equal(true);
+    expect(isBigNumber(vault.tvl)).is.equal(true);
+    expect(isBigNumber(vault.tvlUsdc)).is.equal(true);
+    expect(isBigNumber(vault.decimals)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.underlying)).is.equal(true);
+    expect(Array.isArray(vault.rewardTokens)).is.equal(true);
+    expect(Array.isArray(vault.rewardTokensBal)).is.equal(true);
+    expect(Array.isArray(vault.rewardTokensBalUsdc)).is.equal(true);
+    expect(isBigNumber(vault.duration)).is.equal(true);
+    expect(Array.isArray(vault.rewardsApr)).is.equal(true);
+    expect(isBigNumber(vault.ppfsApr)).is.equal(true);
+    expect(isBigNumber(vault.users)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.strategy)).is.equal(true);
+    expect(isBigNumber(vault.strategyCreated)).is.equal(true);
+    expect(typeof vault.platform === "number").is.equal(true);
+    expect(Array.isArray(vault.assets)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.assets[0])).is.equal(true);
+    expect(Array.isArray(vault.strategyRewards)).is.equal(true);
+    expect(typeof vault.strategyOnPause === "boolean").is.equal(true);
+    expect(isBigNumber(vault.earned)).is.equal(true);
+
+    // Check user
+    expect(Web3.utils.isAddress(user.wallet)).is.equal(true);
+    expect(Web3.utils.isAddress(user.vault)).is.equal(true);
+    expect(isBigNumber(user.underlyingBalance)).is.equal(true);
+    expect(isBigNumber(user.underlyingBalanceUsdc)).is.equal(true);
+    expect(isBigNumber(user.depositedUnderlying)).is.equal(true);
+    expect(isBigNumber(user.depositedUnderlyingUsdc)).is.equal(true);
+    expect(isBigNumber(user.depositedShare)).is.equal(true);
+    expect(Array.isArray(user.rewardTokens)).is.equal(true);
+    expect(Array.isArray(user.rewards)).is.equal(true);
+    expect(Array.isArray(user.rewardsUsdc)).is.equal(true);
+    expect(Array.isArray(user.rewardsBoost)).is.equal(true);
+    expect(Array.isArray(user.rewardsBoostUsdc)).is.equal(true);
   });
 
   it("getVaultWithUserInfoPagesLight should be correct", async () => {
@@ -691,9 +783,30 @@ describe("Contract reader service tests", (): void => {
         BigNumber.from(1)
       );
 
-    const isArray = Array.isArray(values);
+    const vault = values[0].vault
+    const user = values[0].user
 
-    expect(isArray).is.equal(true);
+    expect(Array.isArray(values)).is.equal(true);
+
+    // Check vault
+    expect(Web3.utils.isAddress(vault.addr)).is.equal(true);
+    expect(isBigNumber(vault.created)).is.equal(true);
+    expect(typeof vault.active === "boolean").is.equal(true);
+    expect(isBigNumber(vault.tvl)).is.equal(true);
+    expect(isBigNumber(vault.tvlUsdc)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.underlying)).is.equal(true);
+    expect(Array.isArray(vault.rewardTokens)).is.equal(true);
+    expect(Array.isArray(vault.rewardsApr)).is.equal(true);
+    expect(isBigNumber(vault.ppfsApr)).is.equal(true);
+    expect(typeof vault.platform === "number").is.equal(true);
+    expect(Array.isArray(vault.assets)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.assets[0])).is.equal(true);
+    expect(isBigNumber(vault.earned)).is.equal(true);
+
+    // Check user
+    expect(isBigNumber(user.depositedUnderlying)).is.equal(true);
+    expect(isBigNumber(user.depositedUnderlyingUsdc)).is.equal(true);
+    expect(isBigNumber(user.depositedShare)).is.equal(true);
   });
 
   it("getVaultWithUserInfos should be correct", async () => {
@@ -703,9 +816,49 @@ describe("Contract reader service tests", (): void => {
       ["0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"]
     );
 
-    const isArray = Array.isArray(values);
+    const vault = values[0].vault
+    const user = values[0].user
 
-    expect(isArray).is.equal(true);
+    expect(Array.isArray(values)).is.equal(true);
+
+    // Check vault
+    expect(Web3.utils.isAddress(vault.addr)).is.equal(true);
+    expect(vault.name).is.equal("TETU_PS");
+    expect(isBigNumber(vault.created)).is.equal(true);
+    expect(typeof vault.active === "boolean").is.equal(true);
+    expect(isBigNumber(vault.tvl)).is.equal(true);
+    expect(isBigNumber(vault.tvlUsdc)).is.equal(true);
+    expect(isBigNumber(vault.decimals)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.underlying)).is.equal(true);
+    expect(Array.isArray(vault.rewardTokens)).is.equal(true);
+    expect(Array.isArray(vault.rewardTokensBal)).is.equal(true);
+    expect(Array.isArray(vault.rewardTokensBalUsdc)).is.equal(true);
+    expect(isBigNumber(vault.duration)).is.equal(true);
+    expect(Array.isArray(vault.rewardsApr)).is.equal(true);
+    expect(isBigNumber(vault.ppfsApr)).is.equal(true);
+    expect(isBigNumber(vault.users)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.strategy)).is.equal(true);
+    expect(isBigNumber(vault.strategyCreated)).is.equal(true);
+    expect(typeof vault.platform === "number").is.equal(true);
+    expect(Array.isArray(vault.assets)).is.equal(true);
+    expect(Web3.utils.isAddress(vault.assets[0])).is.equal(true);
+    expect(Array.isArray(vault.strategyRewards)).is.equal(true);
+    expect(typeof vault.strategyOnPause === "boolean").is.equal(true);
+    expect(isBigNumber(vault.earned)).is.equal(true);
+
+    // Check user
+    expect(Web3.utils.isAddress(user.wallet)).is.equal(true);
+    expect(Web3.utils.isAddress(user.vault)).is.equal(true);
+    expect(isBigNumber(user.underlyingBalance)).is.equal(true);
+    expect(isBigNumber(user.underlyingBalanceUsdc)).is.equal(true);
+    expect(isBigNumber(user.depositedUnderlying)).is.equal(true);
+    expect(isBigNumber(user.depositedUnderlyingUsdc)).is.equal(true);
+    expect(isBigNumber(user.depositedShare)).is.equal(true);
+    expect(Array.isArray(user.rewardTokens)).is.equal(true);
+    expect(Array.isArray(user.rewards)).is.equal(true);
+    expect(Array.isArray(user.rewardsUsdc)).is.equal(true);
+    expect(Array.isArray(user.rewardsBoost)).is.equal(true);
+    expect(Array.isArray(user.rewardsBoostUsdc)).is.equal(true);
   });
 
   it("getVaultWithUserInfosLight should be correct", async () => {
@@ -716,9 +869,30 @@ describe("Contract reader service tests", (): void => {
         ["0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"]
       );
 
-    const isArray = Array.isArray(values);
-
-    expect(isArray).is.equal(true);
+      const vault = values[0].vault
+      const user = values[0].user
+  
+      expect(Array.isArray(values)).is.equal(true);
+  
+      // Check vault
+      expect(Web3.utils.isAddress(vault.addr)).is.equal(true);
+      expect(isBigNumber(vault.created)).is.equal(true);
+      expect(typeof vault.active === "boolean").is.equal(true);
+      expect(isBigNumber(vault.tvl)).is.equal(true);
+      expect(isBigNumber(vault.tvlUsdc)).is.equal(true);
+      expect(Web3.utils.isAddress(vault.underlying)).is.equal(true);
+      expect(Array.isArray(vault.rewardTokens)).is.equal(true);
+      expect(Array.isArray(vault.rewardsApr)).is.equal(true);
+      expect(isBigNumber(vault.ppfsApr)).is.equal(true);
+      expect(typeof vault.platform === "number").is.equal(true);
+      expect(Array.isArray(vault.assets)).is.equal(true);
+      expect(Web3.utils.isAddress(vault.assets[0])).is.equal(true);
+      expect(isBigNumber(vault.earned)).is.equal(true);
+  
+      // Check user
+      expect(isBigNumber(user.depositedUnderlying)).is.equal(true);
+      expect(isBigNumber(user.depositedUnderlyingUsdc)).is.equal(true);
+      expect(isBigNumber(user.depositedShare)).is.equal(true);
   });
 
   it("getVaults should be correct", async () => {
