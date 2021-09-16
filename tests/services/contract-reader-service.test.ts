@@ -31,31 +31,29 @@ describe("Contract reader service tests", (): void => {
   });
 
   it("precision should be correct", async () => {
-    const result = "1000000000000000000";
     const precision = await tetuApi.contractReaderService.getPrecision(
       testContractReaderAddress
     );
 
-    expect(precision.toString()).is.equal(result);
     expect(isBigNumber(precision)).is.equal(true);
   });
 
-  it("version should be correct", async () => {
-    const result = "1.0.0";
+  it("getVersion should be correct", async () => {
     const version = await tetuApi.contractReaderService.getVersion(
       testContractReaderAddress
     );
 
-    expect(version).is.equal(result);
+    console.log(typeof version )
+
+    expect(typeof version === "string").is.equal(true);
   });
 
-  it("bookkeeper should be correct", async () => {
-    const result = "0x0a0846c978a56d6ea9d2602eeb8f977b21f3207f".toLowerCase();
+  it("getBookkeeper should be correct", async () => {
     const bookkeeper = await tetuApi.contractReaderService.getBookkeeper(
       testContractReaderAddress
     );
 
-    expect(bookkeeper.toLowerCase()).is.equal(result);
+    expect(Web3.utils.isAddress(bookkeeper)).is.equal(true);
   });
 
   it("computeApr should be correct", async () => {
@@ -80,21 +78,18 @@ describe("Contract reader service tests", (): void => {
   });
 
   it("getController should be correct", async () => {
-    const result = "0x6678814c273d5088114b6e40cc49c8db04f9bc29".toLowerCase();
     const controller = await tetuApi.contractReaderService.getController(
       testContractReaderAddress
     );
 
-    expect(controller.toLowerCase()).is.equal(result);
+    expect(Web3.utils.isAddress(controller)).is.equal(true);
   });
 
   it("getCreated should be correct", async () => {
-    const result = "1627744519";
     const created = await tetuApi.contractReaderService.getCreated(
       testContractReaderAddress
     );
 
-    expect(created.toString()).is.equal(result);
     expect(isBigNumber(created)).is.equal(true);
   });
 
@@ -126,13 +121,12 @@ describe("Contract reader service tests", (): void => {
   });
 
   it("getPriceCalculator should be correct", async () => {
-    const result = "0x0b62ad43837a69ad60289eeea7c6e907e759f6e8".toLowerCase();
     const priceCalculator =
       await tetuApi.contractReaderService.getPriceCalculator(
         testContractReaderAddress
       );
 
-    expect(priceCalculator.toLowerCase()).is.equal(result);
+    expect(Web3.utils.isAddress(priceCalculator)).is.equal(true);
   });
 
   it("getStrategies should be correct", async () => {
@@ -167,13 +161,11 @@ describe("Contract reader service tests", (): void => {
   });
 
   it("getStrategyCreated should be correct", async () => {
-    const result = "1627742159";
     const created = await tetuApi.contractReaderService.getStrategyCreated(
       testContractReaderAddress,
       "0xb5a5d5fe893bc26c6e70cebb8a193f764a438fd5"
     );
 
-    expect(created.toString()).is.equal(result);
     expect(isBigNumber(created)).is.equal(true);
   });
 
@@ -427,7 +419,7 @@ describe("Contract reader service tests", (): void => {
       "0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"
     );
 
-    expect(result).is.equal(true);
+    expect(typeof result === "boolean").is.equal(true);
   });
 
   it("getVaultCreated should be correct", async () => {
@@ -664,13 +656,12 @@ describe("Contract reader service tests", (): void => {
   });
 
   it("getVaultUnderlying should be correct", async () => {
-    const result = "0x255707B70BF90aa112006E1b07B9AeA6De021424".toLowerCase();
     const value = await tetuApi.contractReaderService.getVaultUnderlying(
       testContractReaderAddress,
       "0x225084D30cc297F3b177d9f93f5C3Ab8fb6a1454"
     );
 
-    expect(value.toLowerCase()).is.equal(result);
+    expect(Web3.utils.isAddress(value)).is.equal(true);
   });
 
   it("getVaultUsers should be correct", async () => {
